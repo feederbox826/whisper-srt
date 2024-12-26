@@ -4,7 +4,7 @@ import os
 from mutagen.aac import AAC
 
 def transcode_to_audio(filename, wavpath):
-    ffmpeg.input(filename).output(wavpath, acodec="aac").overwrite_output().run(capture_stdout=False)
+    ffmpeg.input(filename).output(wavpath, acodec="aac").overwrite_output().run(quiet=True)
 
 def filter_files(root_folder, extensions):
     for filenames in glob.glob(root_folder+'/**', recursive=True):

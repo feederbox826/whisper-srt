@@ -11,6 +11,7 @@ from timeit import default_timer as timer
 import utils
 import os
 import config
+import random
 
 # setup subbing
 import whisperx # type: ignore
@@ -31,6 +32,9 @@ extensions = (".mp4",".wmv",".mov",".avi",".mpg", ".mkv")
 files_list = []
 for folder in config.scan_folders:
     files_list += list(utils.filter_files(folder, extensions))
+# if desired, shuffle
+if config.shuffle_files:
+    random.shuffle(files_list)
 files_list_len = len(files_list)
 print("Number of files: ", files_list_len)
 
