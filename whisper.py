@@ -39,6 +39,9 @@ files_list_len = len(files_list)
 print("Number of files: ", files_list_len)
 
 def transcribe_audio(filename, filename_no_ext=None):
+    global model
+    global model_a
+    global metadata
     audio = whisperx.load_audio(filename)
     result = model.transcribe(audio, chunk_size=10, batch_size=batch_size)
     aligned_result = whisperx.align(result["segments"], model_a, metadata, audio, device, return_char_alignments=False)
@@ -48,7 +51,7 @@ def transcribe_audio(filename, filename_no_ext=None):
         writesrt.write_result(aligned_result, srtfile, {"max_line_width": None, "max_line_count": 2, "highlight_words": False, "preserve_segments": True})
 
 # Transcribe the wav files and display a progress bar
-with tqdm(total=files_list_len, desc="Transcribing Files") as pbar:
+with tqdm(total=files_list_len, desc="Transcribing Files") as pbar:    
     for filename in files_list:
         filename_no_ext = os.path.splitext(filename)[0]
         file_str = filename_no_ext.rsplit("\\", 1)[1].encode('ascii', 'ignore').decode('ascii')
